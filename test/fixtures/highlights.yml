@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  highlight: MyText
+  book_title: MyString
+  book_author: MyString
+  amazon_book_id: MyString
+  note: MyText
+  color: MyString
+  tags: MyString
+  location_type: MyString
+  location: 1.5
+  highlighted_at: 2023-07-31 15:47:59
+  document_tags: MyString
+
+two:
+  highlight: MyText
+  book_title: MyString
+  book_author: MyString
+  amazon_book_id: MyString
+  note: MyText
+  color: MyString
+  tags: MyString
+  location_type: MyString
+  location: 1.5
+  highlighted_at: 2023-07-31 15:47:59
+  document_tags: MyString
