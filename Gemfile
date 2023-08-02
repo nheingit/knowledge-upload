@@ -80,3 +80,15 @@ gem 'devise'
 
 #pagination
 gem 'will_paginate', '~> 3.3.0'
+
+gem "neighbor", "~> 0.3.0"
+
+gem "pgvector", "~> 0.2"
+
+gem "langchainrb", "~> 0.6.10"
+
+gem "pg", "~> 1.5"
+
+gem "ruby-openai", "~> 4.2"
+
+gem "sequel", "~> 5.71"

@@ -21,4 +21,12 @@ class Highlight < ApplicationRecord
       highlight = create!(highlight_hash)
     end
   end
+
+  def to_greymatter
+    metadata = self.attributes.except("highlight", "id", "created_at", "updated_at").compact.map do |key, value|
+      "#{key}: #{value}"
+    end.join("\n")
+
+    "---\n#{metadata}\n---\n#{self.highlight}"
+  end
 end

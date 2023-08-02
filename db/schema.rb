@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_31_220405) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_01_221753) do
   create_table "highlights", force: :cascade do |t|
     t.text "highlight"
     t.string "book_title"
