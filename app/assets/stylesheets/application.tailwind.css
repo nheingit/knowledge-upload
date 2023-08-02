@@ -2,12 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
+.response {
+    background-color: #1F2937;
+    color: #fff;
+    padding: 2em;
 }
 
-*/
+.input {
+    background-color: #374151;
+    color: #fff;
+    padding: 2em;
+}
+
+.prompt_form {
+    background-color: #374151;
+    color: #fff;
+    padding: 2em;
+}

@@ -1,0 +1,31 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+
+  <div class="mb-8">
+    <% if user_signed_in? %>
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600" %>
+    <% else %>
+      <div class="flex justify-around w-full">
+        <%= link_to "Sign up", new_user_registration_path, class: "px-4 py-2 mr-2 text-white bg-blue-500 rounded hover:bg-blue-600" %>
+        <%= link_to "Sign in", new_user_session_path, class: "px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600" %>
+      </div>
+    <% end %>
+  </div>
+
+  <h1 class="mb-4 text-4xl font-bold">dashboard#index</h1>
+
+  <%= form_tag csv_import_path, multipart: true, class: "flex flex-col items-center mb-8" do %>
+    <%= file_field_tag :file, class: "mb-4" %>
+    <%= submit_tag "Submit File", class: "px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600" %>
+  <% end %>
+
+  <% if not @highlights.empty? %>
+    <% @highlights.each do |highlight| %>
+      <p class="mb-4 text-lg text-gray-700">
+        <%= highlight.highlight %>
+      </p>
+    <% end %>
+    <%= will_paginate @highlights, class: 'mb-4' %>
+  <% end %>
+
+</div>
+

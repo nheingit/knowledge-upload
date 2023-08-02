@@ -92,3 +92,5 @@ gem "pg", "~> 1.5"
 gem "ruby-openai", "~> 4.2"
 
 gem "sequel", "~> 5.71"
+
+gem "dotenv-rails", "~> 2.8"
