@@ -94,3 +94,7 @@ gem "ruby-openai", "~> 4.2"
 gem "sequel", "~> 5.71"
 
 gem "dotenv-rails", "~> 2.8"
+
+gem "dockerfile-rails", ">= 1.5", :group => :development
+
+gem "redis", "~> 5.0"
