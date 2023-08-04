@@ -11,18 +11,19 @@
     <% end %>
   </div>
 
-  <h1 class="mb-4 text-4xl font-bold">dashboard#index</h1>
+  <h1 class="mb-4 text-4xl font-bold">Be Sure The File Is A ReadWise CSV Export. <br> Nothing Else will work right now</h1>
 
   <%= form_tag csv_import_path, multipart: true, class: "flex flex-col items-center mb-8" do %>
     <%= file_field_tag :file, class: "mb-4" %>
-    <%= submit_tag "Submit File", class: "px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600" %>
+    <%= submit_tag "Submit File", class: "px-4 py-2 text-white mb-4 bg-green-500 rounded hover:bg-green-600" %>
+    <%= link_to 'Ask Questions To Your Notes', home_index_path, class: "px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600" %>
   <% end %>
 
   <% if not @highlights.empty? %>
+    <h1 class="mb-4 text-4xl font-bold">Your Uploaded Notes</h1>
     <% @highlights.each do |highlight| %>
       <p class="mb-4 text-lg text-gray-700">
         <%= highlight.highlight %>
-      </p>
     <% end %>
     <%= will_paginate @highlights, class: 'mb-4' %>
   <% end %>
