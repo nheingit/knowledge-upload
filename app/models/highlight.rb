@@ -2,7 +2,7 @@ class Highlight < ApplicationRecord
   require 'csv'
   belongs_to :user
 
-  def self.import(file)
+  def self.import(file, user_id)
     CSV.foreach(file.path, headers: true) do |row|
       highlight_hash = {
         highlight: row['Highlight'],
@@ -16,8 +16,9 @@ class Highlight < ApplicationRecord
         location: row['Location'],
         highlighted_at: row['Highlighted at'],
         document_tags: row['Document tags'],
-        user_id: user.id
+        user_id: user_id
       }
+      Rails.logger.debug "Highlight Hash: #{highlight_hash.inspect}"
       highlight = create!(highlight_hash)
     end
   end
