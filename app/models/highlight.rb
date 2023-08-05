@@ -3,6 +3,8 @@ class Highlight < ApplicationRecord
   belongs_to :user
 
   def self.import(file, user_id)
+    texts_to_embed = []
+    ids = []
     CSV.foreach(file.path, headers: true) do |row|
       highlight_hash = {
         highlight: row['Highlight'],
@@ -18,9 +20,11 @@ class Highlight < ApplicationRecord
         document_tags: row['Document tags'],
         user_id: user_id
       }
-      Rails.logger.debug "Highlight Hash: #{highlight_hash.inspect}"
       highlight = create!(highlight_hash)
+      texts_to_embed.push(highlight.to_greymatter)
+      ids.push(highlight.id)
     end
+    embed(texts: texts_to_embed, ids: ids)
   end
 
   def to_greymatter
@@ -29,5 +33,18 @@ class Highlight < ApplicationRecord
     end.join("\n")
 
     "---\n#{metadata}\n---\n#{self.highlight}"
+  end
+
+  private
+
+
+  def self.embed(texts:, ids:)
+    client = Langchain::Vectorsearch::Pgvector.new(                               
+      url: ENV['DATABASE_URL'],                                                                             
+      index_name: 'highlights',                                                                       
+      llm: Langchain::LLM::OpenAI.new(api_key: ENV['OPENAI_KEY']),                                          
+      namespace: 'openai'                                                                              
+    )                                                                                                   
+    client.upsert_texts(texts: texts, ids: ids)
   end
 end
