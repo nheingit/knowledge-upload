@@ -64,10 +64,6 @@ To use the application:
 2. Use the interface to upload a CSV file.
 3. Once the file is uploaded, you can start asking questions about your data in the chat interface.
 
-## Contributing
-
-Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md) for details on our code of conduct and the process for submitting pull requests to us.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
