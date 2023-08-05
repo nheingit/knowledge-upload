@@ -5,7 +5,8 @@ class Highlight < ApplicationRecord
   def self.import(file, user_id)
     texts_to_embed = []
     ids = []
-    CSV.foreach(file.path, headers: true) do |row|
+    CSV.foreach(file.path, headers: true).each_with_index do |row, index|
+      break if index >= 5 # Stop processing after the first 5 rows
       highlight_hash = {
         highlight: row['Highlight'],
         book_title: row['Book Title'],
@@ -24,7 +25,15 @@ class Highlight < ApplicationRecord
       texts_to_embed.push(highlight.to_greymatter)
       ids.push(highlight.id)
     end
-    embed(texts: texts_to_embed, ids: ids)
+    client = Langchain::Vectorsearch::Pgvector.new(                               
+      url: ENV['DATABASE_URL'],                                                                             
+      index_name: 'highlights',                                                                       
+      llm: Langchain::LLM::OpenAI.new(api_key: ENV['OPENAI_KEY']),                                          
+      namespace: 'openai'                                                                              
+    )                                                                                                   
+    client.upsert_texts(texts: texts_to_embed, ids: ids)
+    puts texts_to_embed
+    puts ids
   end
 
   def to_greymatter
@@ -33,18 +42,5 @@ class Highlight < ApplicationRecord
     end.join("\n")
 
     "---\n#{metadata}\n---\n#{self.highlight}"
-  end
-
-  private
-
-
-  def self.embed(texts:, ids:)
-    client = Langchain::Vectorsearch::Pgvector.new(                               
-      url: ENV['DATABASE_URL'],                                                                             
-      index_name: 'highlights',                                                                       
-      llm: Langchain::LLM::OpenAI.new(api_key: ENV['OPENAI_KEY']),                                          
-      namespace: 'openai'                                                                              
-    )                                                                                                   
-    client.upsert_texts(texts: texts, ids: ids)
   end
 end
