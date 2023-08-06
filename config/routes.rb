@@ -1,5 +1,10 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
   devise_for :users
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => 'admin/sidekiq'
+  end
+  get 'jobs/progress', to: 'jobs#progress'
   get 'dashboard', to: 'pages#dashboard'
   post 'prompts', to: 'prompts#create'
   get 'home/index'

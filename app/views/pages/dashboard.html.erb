@@ -18,7 +18,9 @@
     <%= submit_tag "Submit File", class: "px-4 py-2 text-white mb-4 bg-green-500 rounded hover:bg-green-600" %>
     <%= link_to 'Ask Questions To Your Notes', home_index_path, class: "px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600" %>
   <% end %>
-
+  <div data-controller="progress" data-progress-job-id="<%= params[:job_id] %>">
+    <div data-progress-target="status"></div>
+  </div>
   <% if not @highlights.empty? %>
     <h1 class="mb-4 text-4xl font-bold">Your Uploaded Notes</h1>
     <% @highlights.each do |highlight| %>
