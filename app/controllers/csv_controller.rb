@@ -3,7 +3,7 @@ class CsvController < ApplicationController
     user_id = current_user.id
 
     # Save the uploaded file to a temporary location
-    tmp_file_path = Rails.root.join('tmp', "upload_#{Time.now.to_i}.csv")
+    tmp_file_path = Rails.root.join('tmp', "upload_#{user_id}_#{Time.now.to_f}.csv")
     File.open(tmp_file_path, 'wb') do |file|
       file.write(params[:file].read)
     end

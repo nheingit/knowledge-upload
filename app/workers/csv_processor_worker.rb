@@ -5,6 +5,10 @@ class CsvProcessorWorker
   include Sidekiq::Status::Worker
 
   def perform(file_path, user_id)
+    unless File.exist?(file_path)
+      logger.error "File not found: #{file_path}"
+      return
+    end
     texts_to_embed = []
     ids = []
     # Total Progress of task
