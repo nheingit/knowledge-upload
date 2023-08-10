@@ -4,18 +4,16 @@ class CsvProcessorWorker
   include Sidekiq::Worker 
   include Sidekiq::Status::Worker
 
-  def perform(file_path, user_id)
-    unless File.exist?(file_path)
-      logger.error "File not found: #{file_path}"
-      return
-    end
+  def perform(encoded_csv_content, user_id)
+    csv_content = Base64.decode64(encoded_csv_content)
     texts_to_embed = []
     ids = []
+    csv_rows = CSV.parse(csv_content, headers: true)
     # Total Progress of task
-    total_rows = CSV.read(file_path).count
+    total_rows = csv_rows.count
     total total_rows
     store(message: 'Starting Upload')
-    CSV.foreach(file_path, headers: true).each_with_index do |row, index|
+    csv_rows.each_with_index do |row, index|
       highlight_hash = {
         highlight: row['Highlight'],
         book_title: row['Book Title'],

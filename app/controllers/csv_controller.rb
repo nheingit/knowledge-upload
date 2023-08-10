@@ -2,14 +2,13 @@ class CsvController < ApplicationController
   def import
     user_id = current_user.id
 
-    # Save the uploaded file to a temporary location
-    tmp_file_path = Rails.root.join('tmp', "upload_#{user_id}_#{Time.now.to_f}.csv")
-    File.open(tmp_file_path, 'wb') do |file|
-      file.write(params[:file].read)
-    end
+    # Read the uploaded file and encode it as a Base64 string
+    csv_content = params[:file].read
+    encoded_csv_content = Base64.encode64(csv_content)
+
 
     # Enqueue the Sidekiq job
-    job_id = CsvProcessorWorker.perform_async(tmp_file_path.to_s, user_id)
+    job_id = CsvProcessorWorker.perform_async(encoded_csv_content, user_id)
     redirect_to dashboard_path(job_id: job_id), notice: 'CSV is being processed...'
   end
 
