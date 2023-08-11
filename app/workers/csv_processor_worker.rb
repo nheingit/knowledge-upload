@@ -8,7 +8,7 @@ class CsvProcessorWorker
     csv_content = Base64.decode64(encoded_csv_content)
     texts_to_embed = []
     ids = []
-    csv_rows = CSV.parse(csv_content, headers: true)
+    csv_rows = CSV.parse(csv_content, headers: true, encoding: 'UTF-8')
     # Total Progress of task
     total_rows = csv_rows.count
     total total_rows
