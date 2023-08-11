@@ -44,8 +44,5 @@ class CsvProcessorWorker
     store(message: 'Embedding Notes')
     client.upsert_texts(texts: texts_to_embed, ids: ids)
     store(message: 'Notes Embedded')
-
-    # Cleanup
-    File.delete(file_path)
   end
 end
