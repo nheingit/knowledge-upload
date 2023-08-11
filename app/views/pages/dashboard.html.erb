@@ -3,6 +3,9 @@
   <div class="mb-8">
     <% if user_signed_in? %>
       <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600" %>
+      <% if current_user.admin? %>
+        <%= link_to "Monitor Jobs", sidekiq_web_path %>
+      <% end %>
     <% else %>
       <div class="flex justify-around w-full">
         <%= link_to "Sign up", new_user_registration_path, class: "px-4 py-2 mr-2 text-white bg-blue-500 rounded hover:bg-blue-600" %>

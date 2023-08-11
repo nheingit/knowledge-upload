@@ -17,10 +17,6 @@ console_command = "/rails/bin/rails console"
   min_machines_running = 0
   processes = ["app"]
 
-[[statics]]
-  guest_path = "/rails/public"
-  url_prefix = "/"
-
 [processes]
 app = "bin/rails server"
 worker = "bundle exec sidekiq"
